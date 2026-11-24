@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- HabitFlow app metadata and asset loading -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HabitFlow | Daily Habit Tracker</title>
+    <meta
+      name="description"
+      content="HabitFlow daily habit tracker dashboard"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <!-- Main app layout: sidebar + content area -->
+    <div class="layout">
+      <!-- Sidebar navigation and user summary -->
+      <aside class="sidebar" aria-label="Sidebar navigation">
+        <div class="logo" aria-label="HabitFlow logo">
+          <div class="logo-mark">H</div>
+          <div class="logo-text">
+            <span class="logo-title">HabitFlow</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Dashboard navigation">
+          <div class="nav-section-label">Overview</div>
+          <ul>
+            <li>
+              <a href="#dashboard" class="nav-link active" data-view="dashboard"><span class="nav-icon">◫</span>Dashboard</a>
+            </li>
+            <li>
+              <a href="#habits" class="nav-link" data-view="habits"><span class="nav-icon">◎</span>My Habits</a>
+            </li>
+            <li>
+              <a href="#calendar" class="nav-link" data-view="calendar"><span class="nav-icon">◌</span>Calendar</a>
+            </li>
+            <li>
+              <a href="#statistics" class="nav-link" data-view="statistics"><span class="nav-icon">▣</span>Statistics</a>
+            </li>
+            <li>
+              <a href="#reports" class="nav-link" data-view="reports"><span class="nav-icon">◧</span>Reports</a>
+            </li>
+            <li>
+              <a href="#heatmap" class="nav-link" data-view="heatmap"><span class="nav-icon">▤</span>Habit Heatmap</a>
+            </li>
+            <li>
+              <a href="#achievements" class="nav-link" data-view="achievements"><span class="nav-icon">★</span>Achievements</a>
+            </li>
+            <li>
+              <a href="#goals" class="nav-link" data-view="goals"><span class="nav-icon">◎</span>Goals</a>
+            </li>
+            <li>
+              <a href="#settings" class="nav-link" data-view="settings"><span class="nav-icon">⚙</span>Settings</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-profile">
+          <div class="profile-badge">A</div>
+          <div class="profile-meta">
+            <strong>Alex Morgan</strong>
+            <span>Student</span>
+          </div>
+          <button type="button" class="logout-btn" aria-label="Log out">Logout</button>
+        </div>
+      </aside>
+
+      <!-- Main dashboard content area -->
+      <main class="main-content">
+        <!-- Top header with date, theme toggle, notifications and profile -->
+        <header class="topbar">
+          <div class="topbar-main">
+            <div class="search-box" aria-label="Search dashboard">
+              <span class="search-icon">⌕</span>
+              <input type="search" placeholder="Search habits, reports, goals..." aria-label="Search" />
+            </div>
+
+            <div class="topbar-actions">
+              <button type="button" class="mobile-nav-toggle" data-mobile-nav-toggle aria-label="Open navigation menu">
+                ☰
+              </button>
+              <div class="date-chip">Nov 13, 2026</div>
+              <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode">
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+              </button>
+              <button type="button" class="icon-button" aria-label="Notifications">
+                🔔 <span class="notification-count">3</span>
+              </button>
+              <div class="profile-pill">
+                <div class="profile-avatar">A</div>
+                <div class="profile-meta-mini">
+                  <strong>Alex</strong>
+                  <span>Premium</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Dashboard overview page -->
+        <div id="dashboard-view" class="view-section active" data-section="dashboard">
+          <section class="welcome-panel" aria-labelledby="welcome-heading">
+            <div class="welcome-copy">
+              <p class="section-label">Welcome</p>
+              <h2 id="welcome-heading">Welcome back, Alex!</h2>
+              <p>
+                You’re on track to build a stronger routine. Keep your momentum
+                going with today’s habits.
+              </p>
+              <div class="welcome-motivation">
+                “Small steps daily build a powerful future.”
+              </div>
+            </div>
+
+            <div class="welcome-side">
+              <div class="daily-ring" aria-label="Daily progress circle">
+                <div class="daily-ring-inner">
+                  <strong>75%</strong>
+                  <span>Daily goal</span>
+                </div>
+              </div>
+              <button type="button" class="primary-btn" id="add-habit-btn">
+                + Add New Habit
+              </button>
+            </div>
+          </section>
+
+          <div class="dashboard-shell">
+            <div class="dashboard-main-column">
+              <section class="progress-section" aria-labelledby="today-progress-heading">
+                <div class="section-header">
+                  <h2 id="today-progress-heading">Today's Progress</h2>
+                </div>
+
+                <div class="progress-summary" id="today-progress-summary">
+                  <div class="progress-stat">
+                    <span class="stat-label">Today's Progress</span>
+                    <strong class="stat-value" data-progress="completed">3</strong>
+                  </div>
+                  <div class="progress-stat">
+                    <span class="stat-label">Active Habits</span>
+                    <strong class="stat-value" data-progress="total">3</strong>
+                  </div>
+                  <div class="progress-stat">
+                    <span class="stat-label">Completed</span>
+                    <strong class="stat-value" data-progress="completed">3</strong>
+                  </div>
+                  <div class="progress-stat">
+                    <span class="stat-label">Remaining Today</span>
+                    <strong class="stat-value" data-progress="remaining">0</strong>
+                  </div>
+                </div>
+              </section>
+
+              <section class="daily-checklist-panel" aria-labelledby="daily-checklist-heading">
+                <div class="section-header">
+                  <h2 id="daily-checklist-heading">Positive Habits</h2>
+                  <div class="daily-checklist-summary">
+                    <span><strong id="daily-checked-count">0</strong> done</span>
+                    <span><strong id="daily-remaining-count">0</strong> left</span>
+                  </div>
+                </div>
+                <div class="daily-checklist" id="daily-checklist" aria-live="polite"></div>
+              </section>
+
+              <section class="achievement-summary-panel" aria-labelledby="achievement-heading">
+                <div class="section-header">
+                  <h2 id="achievement-heading">Achievement Summary</h2>
+                  <button type="button" class="secondary-btn" id="view-achievements-btn">
+                    View All Achievements
+                  </button>
+                </div>
+                <div id="achievement-summary" class="achievement-summary" aria-live="polite"></div>
+              </section>
+            </div>
+
+            <div class="dashboard-side-column">
+              <section class="weekly-panel" aria-labelledby="weekly-progress-heading">
+                <div class="section-header">
+                  <h2 id="weekly-progress-heading">Weekly Progress</h2>
+                </div>
+
+                <div class="weekly-progress" id="weekly-progress">
+                  <div class="week-day">
+                    <span class="day-name">Mon</span>
+                    <span class="day-bar" style="height: 70%"></span>
+                  </div>
+                  <div class="week-day">
+                    <span class="day-name">Tue</span>
+                    <span class="day-bar" style="height: 85%"></span>
+                  </div>
+                  <div class="week-day">
+                    <span class="day-name">Wed</span>
+                    <span class="day-bar" style="height: 55%"></span>
+                  </div>
+                  <div class="week-day">
+                    <span class="day-name">Thu</span>
+                    <span class="day-bar" style="height: 90%"></span>
+                  </div>
+                  <div class="week-day">
+                    <span class="day-name">Fri</span>
+                    <span class="day-bar" style="height: 80%"></span>
+                  </div>
+                  <div class="week-day">
+                    <span class="day-name">Sat</span>
+                    <span class="day-bar" style="height: 60%"></span>
+                  </div>
+                  <div class="week-day">
+                    <span class="day-name">Sun</span>
+                    <span class="day-bar" style="height: 40%"></span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="calendar-panel" aria-labelledby="monthly-calendar-heading">
+                <div class="section-header">
+                  <h2 id="monthly-calendar-heading">Monthly Calendar</h2>
+                </div>
+                <div id="calendar-content" class="calendar-content"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div id="heatmap-view" class="view-section" data-section="heatmap">
+          <section class="statistics-panel" aria-labelledby="heatmap-page-heading">
+            <div class="section-header">
+              <h2 id="heatmap-page-heading">Habit Heatmap</h2>
+              <button type="button" class="secondary-btn" data-back-dashboard>Back to Dashboard</button>
+            </div>
+
+            <div class="heatmap-card">
+              <div class="chart-header heatmap-header">
+                <h3>Daily activity overview</h3>
+                <div class="heatmap-year-controls" aria-label="Heatmap year controls">
+                  <button type="button" aria-label="Previous year" data-heatmap-year="prev">&#8249;</button>
+                  <span id="heatmap-year-label">2026</span>
+                  <button type="button" aria-label="Next year" data-heatmap-year="next">&#8250;</button>
+                </div>
+              </div>
+
+              <div class="heatmap-stats">
+                <div class="heatmap-metric">
+                  <span>Active days</span>
+                  <strong id="heatmap-active-days">0</strong>
+                </div>
+                <div class="heatmap-metric">
+                  <span>Total check-ins</span>
+                  <strong id="heatmap-total-checkins">0</strong>
+                </div>
+              </div>
+
+              <div id="habit-heatmap" class="habit-heatmap" aria-live="polite"></div>
+            </div>
+          </section>
+        </div>
+
+        <div id="achievements-view" class="view-section" data-section="achievements">
+          <section class="statistics-panel" aria-labelledby="achievements-page-heading">
+            <div class="section-header">
+              <h2 id="achievements-page-heading">Achievements</h2>
+              <button type="button" class="secondary-btn" data-back-dashboard>Back to Dashboard</button>
+            </div>
+            <div id="achievement-library" class="achievement-library"></div>
+          </section>
+        </div>
+
+        <div id="goals-view" class="view-section" data-section="goals">
+          <section class="statistics-panel" aria-labelledby="goals-page-heading">
+            <div class="section-header">
+              <h2 id="goals-page-heading">Goals</h2>
+              <button type="button" class="primary-btn" id="add-goal-btn">+ Add Goal</button>
+            </div>
+            <div id="goals-summary" class="goals-summary"></div>
+            <div id="goals-list" class="goals-list"></div>
+          </section>
+        </div>
+
+        <div id="settings-view" class="view-section" data-section="settings">
+          <section class="statistics-panel" aria-labelledby="settings-page-heading">
+            <div class="section-header">
+              <h2 id="settings-page-heading">Settings</h2>
+              <button type="button" class="secondary-btn" data-back-dashboard>Back to Dashboard</button>
+            </div>
+
+            <div class="settings-grid">
+              <div class="settings-card">
+                <h3>Appearance</h3>
+                <div class="theme-option-group">
+                  <button type="button" class="theme-choice-btn active" data-settings-theme="light">Light Mode</button>
+                  <button type="button" class="theme-choice-btn" data-settings-theme="dark">Dark Mode</button>
+                </div>
+              </div>
+
+              <div class="settings-card">
+                <h3>Profile Preferences</h3>
+                <label class="checkbox-row"><input type="checkbox" id="setting-notifications" checked /> Daily reminders</label>
+                <label class="checkbox-row"><input type="checkbox" id="setting-weekly-summary" checked /> Weekly recap emails</label>
+              </div>
+
+              <div class="settings-card settings-actions-card">
+                <h3>Saved Data</h3>
+                <button type="button" class="secondary-btn" id="export-data-btn">Export Data</button>
+                <button type="button" class="secondary-btn danger-btn" id="reset-data-btn">Reset Saved Data</button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Habit management page -->
+        <div id="habits-view" class="view-section" data-section="habits">
+          <section class="habits-panel" aria-labelledby="habits-heading">
+            <div class="section-header">
+              <h2 id="habits-heading">My Habits</h2>
+              <button type="button" class="secondary-btn" id="add-habit-inline">
+                Add New Habit
+              </button>
+            </div>
+
+            <div class="habit-list" id="habit-list" aria-live="polite">
+              <article class="habit-card" data-habit-id="1">
+                <div class="habit-card-header">
+                  <div>
+                    <h3>Morning Run</h3>
+                    <p>Cardio</p>
+                  </div>
+                  <span class="habit-status completed">Done</span>
+                </div>
+                <div class="habit-meta">
+                  <span>5 days streak</span>
+                  <span>30 min</span>
+                </div>
+              </article>
+
+              <article class="habit-card" data-habit-id="2">
+                <div class="habit-card-header">
+                  <div>
+                    <h3>Read 20 Pages</h3>
+                    <p>Learning</p>
+                  </div>
+                  <span class="habit-status in-progress">In progress</span>
+                </div>
+                <div class="habit-meta">
+                  <span>3 days streak</span>
+                  <span>20 pages</span>
+                </div>
+              </article>
+
+              <article class="habit-card" data-habit-id="3">
+                <div class="habit-card-header">
+                  <div>
+                    <h3>Drink Water</h3>
+                    <p>Health</p>
+                  </div>
+                  <span class="habit-status pending">Pending</span>
+                </div>
+                <div class="habit-meta">
+                  <span>7 days streak</span>
+                  <span>8 glasses</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="empty-state hidden" id="empty-state" aria-live="polite">
+              <p>No habits added yet. Start your routine by creating your first habit.</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Calendar page -->
+        <div id="calendar-view" class="view-section" data-section="calendar">
+          <section class="calendar-panel" id="calendar-panel" aria-labelledby="calendar-heading">
+            <div class="section-header">
+              <h2 id="calendar-heading">Calendar</h2>
+            </div>
+            <div id="calendar-content" class="calendar-content"></div>
+          </section>
+        </div>
+
+        <!-- Statistics page -->
+        <div id="statistics-view" class="view-section" data-section="statistics">
+          <section class="statistics-panel" aria-labelledby="statistics-heading">
+            <div class="section-header">
+              <h2 id="statistics-heading">Statistics</h2>
+            </div>
+            <div class="statistics-grid" id="statistics-grid">
+              <div class="stat-box">
+                <span>Total habits</span>
+                <strong id="stat-total-habits">0</strong>
+              </div>
+              <div class="stat-box">
+                <span>Completed</span>
+                <strong id="stat-completed-habits">0</strong>
+              </div>
+              <div class="stat-box">
+                <span>Current streak</span>
+                <strong id="stat-current-streak">0</strong>
+              </div>
+              <div class="stat-box">
+                <span>Success rate</span>
+                <strong id="stat-success-rate">0%</strong>
+              </div>
+            </div>
+
+            <div class="report-toolbar">
+              <div class="report-filter">
+                <label for="report-date-filter">Report date</label>
+                <input id="report-date-filter" type="date" />
+              </div>
+              <div class="report-range-switcher" aria-label="Report range switcher">
+                <button type="button" class="report-range-btn active" data-report-range="week">Week</button>
+                <button type="button" class="report-range-btn" data-report-range="month">Month</button>
+              </div>
+            </div>
+
+            <div class="report-summary-grid">
+              <article class="report-card" data-report-type="weekly">
+                <div class="report-card-header">
+                  <span class="report-label">Weekly completion</span>
+                  <span class="report-badge">This week</span>
+                </div>
+                <strong class="report-value" id="weekly-completion-rate">0%</strong>
+                <div class="report-meta" id="weekly-comparison">vs previous week</div>
+              </article>
+
+              <article class="report-card" data-report-type="monthly">
+                <div class="report-card-header">
+                  <span class="report-label">Monthly completion</span>
+                  <span class="report-badge">This month</span>
+                </div>
+                <strong class="report-value" id="monthly-completion-rate">0%</strong>
+                <div class="report-meta" id="monthly-comparison">vs previous month</div>
+              </article>
+
+              <article class="report-card" data-report-type="completed">
+                <div class="report-card-header">
+                  <span class="report-label">Total completed</span>
+                  <span class="report-badge">Selected period</span>
+                </div>
+                <strong class="report-value" id="report-total-completed">0</strong>
+                <div class="report-meta" id="report-total-pending">0 pending</div>
+              </article>
+
+              <article class="report-card" data-report-type="streaks">
+                <div class="report-card-header">
+                  <span class="report-label">Current &amp; longest streak</span>
+                  <span class="report-badge">Habit health</span>
+                </div>
+                <strong class="report-value" id="report-current-streak">0d</strong>
+                <div class="report-meta" id="report-longest-streak">Longest: 0d</div>
+              </article>
+
+              <article class="report-card" data-report-type="best-habit">
+                <div class="report-card-header">
+                  <span class="report-label">Best habit</span>
+                  <span class="report-badge">Top performer</span>
+                </div>
+                <strong class="report-value" id="report-best-habit">N/A</strong>
+                <div class="report-meta" id="report-best-habit-meta">0 check-ins</div>
+              </article>
+
+              <article class="report-card" data-report-type="least-habit">
+                <div class="report-card-header">
+                  <span class="report-label">Least consistent</span>
+                  <span class="report-badge">Needs attention</span>
+                </div>
+                <strong class="report-value" id="report-least-habit">N/A</strong>
+                <div class="report-meta" id="report-least-habit-meta">0 check-ins</div>
+              </article>
+            </div>
+
+            <div class="chart-grid">
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>Weekly trend</h3>
+                  <span id="weekly-chart-label">This week</span>
+                </div>
+                <div class="chart-bars" id="weekly-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>Monthly trend</h3>
+                  <span id="monthly-chart-label">This month</span>
+                </div>
+                <div class="chart-bars" id="monthly-chart"></div>
+              </div>
+            </div>
+
+            <div class="heatmap-card">
+              <div class="chart-header heatmap-header">
+                <h3>Habit heatmap</h3>
+                <div class="heatmap-year-controls" aria-label="Heatmap year controls">
+                  <button type="button" aria-label="Previous year" data-heatmap-year="prev">&#8249;</button>
+                  <span id="statistics-heatmap-year-label">2026</span>
+                  <button type="button" aria-label="Next year" data-heatmap-year="next">&#8250;</button>
+                </div>
+              </div>
+
+              <div class="heatmap-stats">
+                <div class="heatmap-metric">
+                  <span>Active days</span>
+                  <strong id="statistics-heatmap-active-days">0</strong>
+                </div>
+                <div class="heatmap-metric">
+                  <span>Total check-ins</span>
+                  <strong id="statistics-heatmap-total-checkins">0</strong>
+                </div>
+              </div>
+
+              <div id="statistics-heatmap" class="habit-heatmap" aria-live="polite"></div>
+            </div>
+
+            <div class="progress-bars" id="statistics-progress-bars"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="sidebar-backdrop" data-mobile-nav-close aria-hidden="true"></div>
+  </body>
+</html>
